@@ -36,14 +36,6 @@ echo $OUTPUT->box_start('my_external_backup_course_helpandtool');
 echo $OUTPUT->box_start('my_external_backup_course_help');
 echo html_writer::tag('span', get_string('externalmoodlehelpsection','block_my_external_backup_courses'));
 echo $OUTPUT->box_end();
-$my_external_backup_course_plugin = $DB->get_record('block', array('name'=>'my_external_backup_courses'));
-if($my_external_backup_course_plugin && $my_external_backup_course_plugin->visible == 1){
-	echo $OUTPUT->box_start('my_external_backup_course_tool');
-	echo $OUTPUT->single_button(new moodle_url('/blocks/restore_backup_into_newcourse/restorefile_newcourse.php'), get_string('restore','block_restore_backup_into_newcourse'));
-	echo $OUTPUT->box_end();
-}
-
-echo $OUTPUT->box_end();
 $external_moodles = get_config('my_external_backup_courses', 'external_moodles');
 $ws_params = array('username' => $USER->username);
 
