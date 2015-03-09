@@ -5,19 +5,19 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 
-function get_all_users_courses($username, $onlyactive = false, $fields = NULL, $sort = 'visible DESC,sortorder ASC') {
+function block_my_external_backup_courses_get_all_users_courses($username, $onlyactive = false, $fields = NULL, $sort = 'visible DESC,sortorder ASC') {
 	global $DB;
 
 	$config = get_config('my_external_backup_courses');
     // Guest account does not have any courses
     $user_record = $DB->get_record('user', array('username' => $username));
 	if (!$user_record) { 
-		throw new invalid_username_exception('user with username not found');
+		throw new block_my_external_backup_courses_invalid_username_exception('user with username not found');
 	}
 
     $userid = $user_record->id;
@@ -71,13 +71,22 @@ function get_all_users_courses($username, $onlyactive = false, $fields = NULL, $
 	if(empty($roles)){
 		return false;
 	}	
+	$roles = explode(',', $roles);
+	$new_formatted_roles = array();
+	foreach($roles as $key=>$role){
+		$new_formatted_roles[] = '\''.$role.'\'';
+	}
+	if(count($new_formatted_roles)==0){
+		return false;
+	}
+	
     //note: we can not use DISTINCT + text fields due to Oracle and MS limitations, that is why we have the subselect there
     $sql = "SELECT $coursefields $ccselect
               	FROM {course} c
               	INNER JOIN {context} ctx ON (ctx.instanceid = c.id AND ctx.contextlevel = ".CONTEXT_COURSE.")
               	INNER JOIN (
               		SELECT ra.contextid AS contextid, usr.firstname AS firstname, usr.lastname AS lastname FROM {role_assignments} ra 
-	    			INNER JOIN {role} r ON (r.id = ra.roleid and r.shortname IN ($config->search_roles))
+	    			INNER JOIN {role} r ON (r.id = ra.roleid and r.shortname IN (".implode(',',$new_formatted_roles)."))
 	    			INNER JOIN {user} usr ON (ra.userid = usr.id AND usr.id = $userid)
 	    			) AS u ON (u.contextid = ctx.id)
 	    		WHERE c.id <> ".SITEID
@@ -103,13 +112,13 @@ function get_all_users_courses($username, $onlyactive = false, $fields = NULL, $
     return $courses;
 }
 
-function print_block_my_external_backup_courses_content() {
+function block_my_external_backup_courses_print_content() {
 	global $OUTPUT;
 	$output = '';
 	$external_moodles = get_config('my_external_backup_courses', 'external_moodles');
 	if ($external_moodles && !empty($external_moodles)) {
-		eval('$external_moodles='.$external_moodles.';');
-		if (is_array($external_moodles)) {
+		$external_moodles = split(';', $external_moodles);
+		if (count($external_moodles)>0) {
 			$backup_courses_url = new moodle_url('/blocks/my_external_backup_courses/index.php');
 			$output = $OUTPUT->single_button($backup_courses_url, get_string('downloadcourses', 'block_my_external_backup_courses'));
 		}
@@ -118,7 +127,7 @@ function print_block_my_external_backup_courses_content() {
 	
 }
 
-function rest_call_external_courses_client($domainname, $token, $functionname, $params=array(), $restformat='json', $method='get') {
+function block_my_external_backup_courses_rest_call_external_courses_client($domainname, $token, $functionname, $params=array(), $restformat='json', $method='get') {
 	global $CFG;
 	require_once($CFG->dirroot.'/blocks/my_external_backup_courses/locallib.php');
 	require_once($CFG->dirroot.'/lib/filelib.php');
@@ -138,21 +147,21 @@ function rest_call_external_courses_client($domainname, $token, $functionname, $
 		throw new Exception($resp);
 	}
 	if (isset($resp->errorcode)) {
-		if($resp->exception == 'invalid_username_exception'){
-			throw new invalid_username_exception($resp->debuginfo);		
+		if($resp->exception == 'block_my_external_backup_courses_invalid_username_exception'){
+			throw new block_my_external_backup_courses_invalid_username_exception($resp->debuginfo);		
 		}
 		throw new Exception($resp->debuginfo);
 	}
 	return $resp;
 }
 
-function download_external_backup_courses($domainname, $token, $courseid,$filetoken) {
+function block_my_external_backup_courses_download_external_backup_courses($domainname, $token, $courseid,$filetoken) {
 	global $CFG, $USER;
 	
 	$functionname = 'block_my_external_backup_courses_get_courses_zip';
 	$username = $USER->username;
 	$params = array('username' => $username, 'courseid' => intval($courseid));
-	$file_returned = rest_call_external_courses_client($domainname, $token, $functionname, $params, $restformat='json', $method='post');
+	$file_returned = block_my_external_backup_courses_rest_call_external_courses_client($domainname, $token, $functionname, $params, $restformat='json', $method='post');
 	if(empty($file_returned)){
 		throw new Excpetion('file retrieve : no response');
 	}
@@ -163,13 +172,13 @@ function download_external_backup_courses($domainname, $token, $courseid,$fileto
 	$url .= '?token=' . $token; //NOTE: in your client/app don't forget to attach the token to your download url
 	$url .= '&filerecordid='.$file_returned->filerecordid;
 	//serve file
-	download_backup_course($url, $filename,$domainname,$filetoken);
+	block_my_external_backup_courses_download_backup_course($url, $filename,$domainname,$filetoken);
 }
 
-function external_backup_course_sitename($domainname, $token) {
+function block_my_external_backup_courses_external_backup_course_sitename($domainname, $token) {
 		$site_info = NULL;
 		try {
-			$site_info = rest_call_external_courses_client($domainname, $token, 'core_webservice_get_site_info');
+			$site_info = block_my_external_backup_courses_rest_call_external_courses_client($domainname, $token, 'core_webservice_get_site_info');
 		} catch (Exception $e) {
 			throw new Exception('site name can \'t be retrieved : '.$e->getMessage());
 		}
@@ -179,10 +188,10 @@ function external_backup_course_sitename($domainname, $token) {
 		}
 		return $sitename;	
 }
-function external_backup_course_formatted_sitename($domainname, $token) {
+function block_my_external_backup_courses_external_backup_course_formatted_sitename($domainname, $token) {
 	$site_info = NULL;
 	try {
-		$site_info = rest_call_external_courses_client($domainname, $token, 'core_webservice_get_site_info');
+		$site_info = block_my_external_backup_courses_rest_call_external_courses_client($domainname, $token, 'core_webservice_get_site_info');
 	} catch (Exception $e) {
 		throw new Exception('site name can \'t be retrieved : '.$e->getMessage());
 	}
@@ -207,7 +216,7 @@ function external_backup_course_filename($domainname, $token, $courseid) {
 	$includesitename = (bool)(isset($config->includesitename) ? $config->includesitename : 0);
 	$sitename = '';
 	if ($includesitename) {
-		$sitename = external_backup_course_formatted_sitename($domainname, $token);
+		$sitename = block_my_external_backup_courses_external_backup_course_formatted_sitename($domainname, $token);
 		
 	}
 	$userdate = usergetdate(time());
@@ -221,7 +230,7 @@ function external_backup_course_filename($domainname, $token, $courseid) {
 	return $filename;
 }
 
-function download_backup_course($url, $filename,$domainname,$filetoken) {
+function block_my_external_backup_courses_download_backup_course($url, $filename,$domainname,$filetoken) {
 	
 	ignore_user_abort(true);
 	set_time_limit(0);
@@ -251,21 +260,12 @@ function download_backup_course($url, $filename,$domainname,$filetoken) {
     	throw new Exception($array_response->error);
     }
 }
-class invalid_username_exception extends moodle_exception {
-	/**
-	 * Constructor
-	 * @param string $debuginfo some detailed information
-	 */
-	function __construct($debuginfo=null) {
-		parent::__construct('invalidusername', 'debug', '', null, $debuginfo);
-	}
-}
 
-function get_file_token_for_page(){
+function block_my_external_backup_courses_get_file_token_for_page(){
 	return 'fileToken_'.random_string(10);
 }
 
-function is_downloading($domainname,$filetoken){
+function block_my_external_backup_courses_is_downloading($domainname,$filetoken){
 	if( !isset($_SESSION['USER']->external_backup_course)){
 		return false;
 	}
@@ -279,7 +279,7 @@ function is_downloading($domainname,$filetoken){
 	
 }
 
-function put_file_token($domainname,$filetoken) {
+function block_my_external_backup_courses_put_file_token($domainname,$filetoken) {
 	if( !isset($_SESSION['USER']->external_backup_course)){
 		$_SESSION['USER']->external_backup_course= array();
 	}
@@ -291,5 +291,15 @@ function put_file_token($domainname,$filetoken) {
 function remove_file_token($domainname,$filetoken) {
 	if(isset($_SESSION['USER']->external_backup_course) && array_key_exists($filetoken, $_SESSION['USER']->external_backup_course[$domainname]) ){
 		unset($_SESSION['USER']->external_backup_course[$domainname][$filetoken]);
+	}
+}
+
+class block_my_external_backup_courses_invalid_username_exception extends moodle_exception {
+	/**
+	 * Constructor
+	 * @param string $debuginfo some detailed information
+	 */
+	function __construct($debuginfo=null) {
+		parent::__construct('invalidusername', 'debug', '', null, $debuginfo);
 	}
 }

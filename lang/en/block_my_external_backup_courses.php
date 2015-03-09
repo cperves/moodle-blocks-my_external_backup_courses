@@ -5,16 +5,16 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 
 $string['pluginname'] = 'Download courses from other moodle platforms';
 $string["roles_included_in_external_courses_search"]="Roles in course to add to the external course search";
 $string["roles_included_in_external_courses_search_Desc"]="Roles in course to add to the external course search while searching into user fields : shortnames delimited by simple quote `' and  separated by ,";
 $string['external_moodle']='external moodle list to connect to';
-$string['external_moodleDesc']='a formatted list of external moodle as array(moodle_url=>external_moodle_token_for_webservice_account,...)';
+$string['external_moodleDesc']='a formatted list of external moodle as moodle_url1,token_compte_webservice_moodle_externe1;moodle_url2,token_compte_webservice_moodle_externe2;...';
 $string['Download']='Download';
 $string['my_external_backup_courses:addinstance'] = 'add instance of retrieve backup courses from external moodle';
 $string['my_external_backup_courses:can_see_backup_courses']='View backup courses';

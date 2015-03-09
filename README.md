@@ -56,6 +56,5 @@ File any bugs, improvements, or feature requiests in our [issue tracker][issues]
 
 ## License
 * http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-* http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
-[my_external_private_files_github]: 
+[my_external_backup_courses_github]: 
 [issues]: 

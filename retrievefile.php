@@ -5,9 +5,9 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 require_once('../../config.php');
 require_once($CFG->dirroot.'/lib/filelib.php');
@@ -30,9 +30,9 @@ $filetoken = required_param('filetoken', PARAM_TEXT);
 
 try {
 	//put sess key in session
-	if(!is_downloading($domainname, $filetoken)){
-		put_file_token($domainname, $filetoken);
-		download_external_backup_courses($domainname, $token,$courseid,$filetoken);
+	if(!block_my_external_backup_courses_is_downloading($domainname, $filetoken)){
+		block_my_external_backup_courses_put_file_token($domainname, $filetoken);
+		block_my_external_backup_courses_download_external_backup_courses($domainname, $token,$courseid,$filetoken);
 	}else{
 		//already exists download in progress
 		echo $OUTPUT->header();

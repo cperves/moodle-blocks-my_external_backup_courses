@@ -5,9 +5,9 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 require_once("$CFG->libdir/externallib.php");
 
@@ -20,7 +20,7 @@ class block_my_external_backup_courses_external extends external_api {
 			array('username' => $username, 'courseid' => $courseid));
 
 		require_capability('block/my_external_backup_courses:can_retrieve_courses', context_system::instance());
-		$usercourses = get_all_users_courses($params['username']);
+		$usercourses = block_my_external_backup_courses_get_all_users_courses($params['username']);
 
 		$usercourse_ids = array();
 		foreach($usercourses as $usercourse) {
@@ -74,7 +74,7 @@ class block_my_external_backup_courses_external extends external_api {
 			array('username' => $username));
 
 		require_capability('block/my_external_backup_courses:can_see_backup_courses', context_system::instance());
-		$usercourses = get_all_users_courses($params['username']);
+		$usercourses = block_my_external_backup_courses_get_all_users_courses($params['username']);
 		
 		//create return value
         $coursesinfo = array();

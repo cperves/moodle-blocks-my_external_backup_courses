@@ -5,16 +5,16 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 
 $string['pluginname'] = 'Télécharger vos cours d\'un autre Moodle';
 $string["roles_included_in_external_courses_search"]="Rôles du cours à inclure dans la recherche de cours d'un autre Moodle";
 $string["roles_included_in_external_courses_search_Desc"]="Rôles du cours à inclure dans la recherche de cours d'un autre Moodle lors de la recherche sur les champs utilisateurs :shortnames délimités par des simple quote et séparés par des virgules";
 $string['external_moodle']='Liste des Moodles externes auxquels se connecter';
-$string['external_moodleDesc']='Une liste formattée des Moodles externes sous la forme array(moodle_url=>token_compte_webservice_moodle_externe,...)';
+$string['external_moodleDesc']='Une liste formattée des Moodles externes sous la forme moodle_url1,token_compte_webservice_moodle_externe1;moodle_url2,token_compte_webservice_moodle_externe2;...';
 $string['Download']='Télécharger';
 $string['my_external_backup_courses:addinstance'] = 'Ajouter une instance du block Télécharger vos cours d\'un autre Moodle';
 $string['my_external_backup_courses:can_see_backup_courses']='voir les les backup de cours d\'un autre utilisateur';

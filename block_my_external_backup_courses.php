@@ -5,9 +5,9 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 
 class block_my_external_backup_courses extends block_list {
@@ -27,7 +27,7 @@ class block_my_external_backup_courses extends block_list {
 			return $this->content;
 		}
 		$this->content =  new stdClass;
-		$this->content->items[] = (isguestuser($USER->id) or empty($USER->id) or $USER->id ==0) ? '' : print_block_my_external_backup_courses_content();
+		$this->content->items[] = (isguestuser($USER->id) or empty($USER->id) or $USER->id ==0) ? '' : block_my_external_backup_courses_print_content();
 		$this->content->icons[] = '';
 		$this->content->footer = '';
 		return $this->content;

@@ -1,13 +1,13 @@
 <?php
 /**
- * Folder plugin version information
+ * settings
  *
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
  * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 defined('MOODLE_INTERNAL') || die;
 global $DB;

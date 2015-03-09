@@ -1,4 +1,14 @@
 <?php
+/**
+ * webservices declaration
+ *
+ * @package
+ * @subpackage
+ * @copyright  2014 unistra  {@link http://unistra.fr}
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 $functions = array(
 	'block_my_external_backup_courses_get_courses_zip' => array(

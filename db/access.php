@@ -1,4 +1,14 @@
 <?php
+/**
+ * capabilities for my_external_backup_courses block
+ *
+ * @package
+ * @subpackage
+ * @copyright  2014 unistra  {@link http://unistra.fr}
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 $capabilities = array(
 	'block/my_external_backup_courses:addinstance' => array(
         'riskbitmask' => RISK_XSS,

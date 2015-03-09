@@ -5,9 +5,10 @@
  * @package  
  * @subpackage 
  * @copyright  2013 unistra  {@link http://unistra.fr}
- * @author     Perves Celine <cperves@unistra.fr> inspired from webservices/pluiginfile.php
+ * @author Thierry Schlecht <thierry.schlecht@unistra.fr>
+ * @author Celine Perves <cperves@unistra.fr>
+ * inspired from webservices/pluiginfile.php
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @license    http://www.cecill.info/licences/Licence_CeCILL_V2-en.html
  */
 /**
  * AJAX_SCRIPT - exception will be converted into JSON
