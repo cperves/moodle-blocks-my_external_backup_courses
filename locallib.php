@@ -99,12 +99,12 @@ function block_my_external_backup_courses_get_all_users_courses($username, $only
 			    			FROM {course_categories} cc
 			    			JOIN {context} cctx ON (cctx.instanceid = cc.id AND cctx.contextlevel = ".CONTEXT_COURSECAT.")
 			    			JOIN {role_assignments} ra ON (ra.contextid = cctx.id)
-			    			JOIN {role} ro ON (ra.roleid = ro.id and ro.shortname in ($config->search_roles))
+			    			JOIN {role} ro ON (ra.roleid = ro.id and ro.shortname in (".implode(',',$new_formatted_roles)."))
 			    			GROUP BY cctx.path, ra.userid, ra.roleid
               	) cat ON (ctx.path LIKE cat.path || '/%')
 			    INNER JOIN {user_enrolments} ue ON (ue.enrolid = e.id AND ue.userid = cat.userid)
 			    INNER JOIN {user} u ON u.id = cat.userid AND u.id = ue.userid
-			    INNER JOIN {role} r ON r.id = cat.roleid AND r.shortname IN ($config->search_roles)
+			    INNER JOIN {role} r ON r.id = cat.roleid AND r.shortname IN (".implode(',',$new_formatted_roles).")
 				WHERE u.id = $userid AND c.id <> ".SITEID
           ." $orderby";
 
@@ -117,7 +117,7 @@ function block_my_external_backup_courses_print_content() {
 	$output = '';
 	$external_moodles = get_config('my_external_backup_courses', 'external_moodles');
 	if ($external_moodles && !empty($external_moodles)) {
-		$external_moodles = split(';', $external_moodles);
+		$external_moodles = explode(';', $external_moodles);
 		if (count($external_moodles)>0) {
 			$backup_courses_url = new moodle_url('/blocks/my_external_backup_courses/index.php');
 			$output = $OUTPUT->single_button($backup_courses_url, get_string('downloadcourses', 'block_my_external_backup_courses'));

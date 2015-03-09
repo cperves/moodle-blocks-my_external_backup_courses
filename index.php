@@ -49,11 +49,11 @@ $ws_params = array('username' => $USER->username);
 
 if ($external_moodles_cfg && !empty($external_moodles_cfg)) {
 	//extract key/value
-	$external_moodles = split(';', $external_moodles_cfg);
+	$external_moodles = explode(';', $external_moodles_cfg);
 	$nbr_opened_external_moodles=0;
 	foreach($external_moodles as $key_value) {
 		if(!empty($key_value)){
-			$key_value = split(',',$key_value);
+			$key_value = explode(',',$key_value);
 			$domainname = $key_value[0]; 
 			$token = $key_value[1]; 
 			$serveroptions = array();
