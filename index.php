@@ -28,7 +28,14 @@ $PAGE->set_heading(get_string('externalmoodlecourselist', 'block_my_external_bac
 $PAGE->navbar->add(get_string('blocks'));
 $PAGE->navbar->add(get_string('externalmoodlecourselist', 'block_my_external_backup_courses'));
 //adding js scripts for file token
-get_jquery();
+//---adding jquery-----
+//check if jquery_unistra exists
+$localplugins = get_plugin_list('local'); 
+$jquery_version = array_key_exists('jquery_unistra', $localplugins)?get_config("local_jquery_unistra","jquery_version"):'1.8.1';
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$jquery_url = new moodle_url($protocol.'ajax.googleapis.com/ajax/libs/jquery/'.$jquery_version.($CFG->cachejs == 0?'/jquery.js':'/jquery.min.js'));
+$PAGE->requires->js($jquery_url);
+//---
 $PAGE->requires->js('/blocks/my_external_backup_courses/script.js');
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('externalmoodlecourselist','block_my_external_backup_courses'));

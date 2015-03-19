@@ -165,7 +165,7 @@ function block_my_external_backup_courses_download_external_backup_courses($doma
 	if(empty($file_returned)){
 		throw new Excpetion('file retrieve : no response');
 	}
-	$filename = external_backup_course_filename($domainname, $token, $courseid);
+	$filename = block_external_backup_course_filename($domainname, $token, $courseid);
 
 	// DOWNLOAD File
 	$url = $domainname . '/blocks/my_external_backup_courses/get_user_backup_course_webservice.php'; //NOTE: normally you should get this download url from your previous call of core_course_get_contents()
@@ -211,7 +211,7 @@ function block_my_external_backup_courses_external_backup_course_formatted_siten
 	return $sitename;
 }
 
-function external_backup_course_filename($domainname, $token, $courseid) {
+function block_external_backup_course_filename($domainname, $token, $courseid) {
 	$config = get_config('my_external_backup_courses');
 	$includesitename = (bool)(isset($config->includesitename) ? $config->includesitename : 0);
 	$sitename = '';
