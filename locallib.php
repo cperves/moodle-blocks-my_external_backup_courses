@@ -66,7 +66,12 @@ function block_my_external_backup_courses_get_all_users_courses($username, $only
     }
 
     $coursefields = 'c.' .join(',c.', $fields);
-    list($ccselect, $ccjoin) = context_instance_preload_sql('c.id', CONTEXT_COURSE, 'ctx');
+        
+    $select = ", " . context_helper::get_preload_record_columns_sql('ctx');
+    $join = "LEFT JOIN mdl_context ctx ON (ctx.instanceid = c.id AND ctx.contextlevel = ".CONTEXT_COURSE.")";
+    list($ccselect, $ccjoin)= array($select, $join);   
+    
+    
 	$roles = $config->search_roles;
 	if(empty($roles)){
 		return false;

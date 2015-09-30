@@ -19,6 +19,7 @@ $string['Download']='Télécharger';
 $string['my_external_backup_courses:addinstance'] = 'Ajouter une instance du block Télécharger vos cours d\'un autre Moodle';
 $string['my_external_backup_courses:can_see_backup_courses']='voir les les backup de cours d\'un autre utilisateur';
 $string['my_external_backup_courses:can_retrieve_courses']='récupérer les fichiers d\'un autre utilisateur';
+$string['my_external_backup_courses:myaddinstance'] = 'Ajouter une instance du block Télécharger vos cours d\'un autre Moodle au Tableau de bord';
 $string['filename']= 'Nom de base du fichier';
 $string['filename_desc']= 'Nom de base du fichier';
 $string['includesitename']='Inclure le nom du site dans le nom du fichier';

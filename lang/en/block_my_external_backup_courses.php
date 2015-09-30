@@ -19,6 +19,7 @@ $string['Download']='Download';
 $string['my_external_backup_courses:addinstance'] = 'add instance of retrieve backup courses from external moodle';
 $string['my_external_backup_courses:can_see_backup_courses']='View backup courses';
 $string['my_external_backup_courses:can_retrieve_courses']='Retrieve external backup files';
+$string['my_external_backup_courses:myaddinstance'] = 'add instance of retrieve backup courses from external moodle to Dashboard';
 $string['filename']= 'Base file name';
 $string['filename_desc']= 'Base file name';
 $string['includesitename']='Include site name into file name';

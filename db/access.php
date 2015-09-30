@@ -10,6 +10,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $capabilities = array(
+	'block/my_external_backup_courses:myaddinstance' => array(
+			'captype' => 'write',
+			'contextlevel' => CONTEXT_SYSTEM,
+			'archetypes' => array(
+					'coursecreator' => CAP_ALLOW,
+					'manager' => CAP_ALLOW
+			),
+	),
 	'block/my_external_backup_courses:addinstance' => array(
         'riskbitmask' => RISK_XSS,
 

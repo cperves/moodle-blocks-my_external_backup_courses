@@ -55,4 +55,7 @@ class block_my_external_backup_courses extends block_list {
 		$rs->close();
 		mtrace('done.');
 	}
+	function applicable_formats() {
+		return array('all'=>true,'course-view'=>false,'mod'=>false,'site'=>true ,'my' => true,'tag'=>false);
+	}
 }
