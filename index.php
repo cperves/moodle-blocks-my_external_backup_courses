@@ -29,12 +29,7 @@ $PAGE->navbar->add(get_string('blocks'));
 $PAGE->navbar->add(get_string('externalmoodlecourselist', 'block_my_external_backup_courses'));
 //adding js scripts for file token
 //---adding jquery-----
-//check if jquery_unistra exists
-$localplugins = core_component::get_plugin_list('local'); 
-$jquery_version = array_key_exists('jquery_unistra', $localplugins)?get_config("local_jquery_unistra","jquery_version"):'1.8.1';
-$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-$jquery_url = new moodle_url($protocol.'ajax.googleapis.com/ajax/libs/jquery/'.$jquery_version.($CFG->cachejs == 0?'/jquery.js':'/jquery.min.js'));
-$PAGE->requires->js($jquery_url);
+$PAGE->requires->jquery();
 //---
 $PAGE->requires->js('/blocks/my_external_backup_courses/script.js');
 echo $OUTPUT->header();
@@ -44,7 +39,7 @@ echo $OUTPUT->box_start('my_external_backup_course_help');
 echo html_writer::tag('span', get_string('externalmoodlehelpsection','block_my_external_backup_courses'));
 echo $OUTPUT->box_end();
 $systemcontext = context_system::instance();
-if(has_capability('moodle/course:restore', $systemcontext)){
+if(has_capability('moodle/restore:restorecourse', $systemcontext)){
 	echo $OUTPUT->box_start('restore_backup_into_newcourse');
 	echo $OUTPUT->single_button(new moodle_url('/backup/restorefile.php', array('contextid'=>$systemcontext->id)), get_string('restore','block_restore_backup_into_newcourse'));
 	echo $OUTPUT->box_end();

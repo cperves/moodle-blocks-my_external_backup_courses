@@ -35,3 +35,4 @@ $string['externalmoodlehelpsection']='Donload course(s) that you want to downloa
 $string['invalidusername']='You have no account on this platform';
 $string['downloadinprogress']='Download ever in progress...';
 $string['downloadinprogressnotice']='Course download in progress...';
+$string['restore']='Restore a course';
